@@ -36,7 +36,7 @@ module Headache
     end
 
     def service_code
-      return :mixed_credit_debit if code.to_s == '200'
+      return '200' if type == :mixed_credit_debit
       return '220' if type == :credit
       return '225' if type == :debit
       fail Headache::UnknownBatchType, "unknown batch type: #{type.inspect} (expecting :credit,:debit, :mixed_credit_debit)"
@@ -79,6 +79,7 @@ module Headache
     end
 
     def method_missing(m, *args, &block)
+      puts "send #{m.inspect} #{args.inspect}"
       entries.send m, *args, &block
     end
 
