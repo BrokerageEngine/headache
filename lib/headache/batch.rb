@@ -29,15 +29,17 @@ module Headache
     end
 
     def self.type_from_service_code(code)
+      return :mixed_credit_debit if code.to_s == '200'
       return :credit if code.to_s == '220'
       return :debit  if code.to_s == '225'
-      fail Headache::UnknownServiceCode, "unknown service code: #{code.inspect} (expecting 220 or 225)"
+      fail Headache::UnknownServiceCode, "unknown service code: #{code.inspect} (expecting 200,220, or 225)"
     end
 
     def service_code
+      return :mixed_credit_debit if code.to_s == '200'
       return '220' if type == :credit
       return '225' if type == :debit
-      fail Headache::UnknownBatchType, "unknown batch type: #{type.inspect} (expecting :credit or :debit)"
+      fail Headache::UnknownBatchType, "unknown batch type: #{type.inspect} (expecting :credit,:debit, :mixed_credit_debit)"
     end
 
     def header
