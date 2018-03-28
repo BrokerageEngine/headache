@@ -11,6 +11,8 @@ module Headache
   class UnknownServiceCode < Headache::Exception
   end
 
+  class UnknownTransactionCode < Headache::Exception
+  end
   class UnknownBatchType < Headache::Exception
   end
 end
